@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssf.system.dao.IOrderDao">
+
+	
+	 <sql id="columns">
+       a.id,
+       a.ordercode,
+       a.user_id AS 'userId',
+       a.address,
+       a.post,
+       a.receiver,
+       a.mobile,
+       a.message,
+       a.status,
+       a.pay_date AS 'payDate',
+       a.delivery_date AS 'deliveryDate',
+       a.confirm_date AS 'confirmDate',
+       a.create_time AS 'createTime',
+       a.update_time AS 'updateTime'
+    </sql>
+	
+	<select id="findAll" resultType="Order">
+		SELECT 
+		 <include refid="columns"/> 
+		FROM sys_order a
+	</select>
+	
+	<select id="queryAll" resultType="Order">
+		SELECT 
+			<include refid="columns"/> 
+		FROM sys_order a
+		ORDER BY create_time DESC
+		limit #{offset},#{limit}
+	</select>
+	
+    <!--  
+	<insert id="insertOrder">
+		INSERT INTO
+		_order(user_id,goods_id,title)
+		VALUES
+		(#{userId},#{goodsId},#{title})
+	</insert>
+
+	<select id="queryByUserPhone" resultType="Order">
+		SELECT *
+		FROM
+		_order, _user
+		WHERE
+		_order.user_id=_user.user_id
+		AND
+		_user.user_phone=#{userPhone}
+	</select>
+
+	
+	-->
+</mapper>

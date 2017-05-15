@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 如果使用接口扫描# 你的名称空间要跟你的接口名一样 你的id要跟你的接口的方法名一致 -->
+<mapper namespace="com.ssf.system.dao.IUserDao">
+    
+    <sql id="columns">
+       a.id,
+       a.username,
+       a.password,
+       a.create_time AS 'createTime'
+    </sql>
+    
+    <select id="findAll" resultType="User"><!-- 如果你定义了别名你就可以简化你的写法 -->
+         SELECT 
+         	<include refid="columns"/> 
+         FROM sys_user a
+    </select>
+    
+    
+    <select id="findById" resultType="User">
+		SELECT
+			<include refid="columns"/>
+		FROM sys_user a
+		WHERE a.id = #{0}
+		AND a.username = #{1}
+	</select>
+	
+	 <select id="getById" resultType="User">
+		SELECT
+			<include refid="columns"/>
+		FROM sys_user a
+		WHERE a.id = #{0}
+	</select>
+	
+	<insert id="save" parameterType="User">
+	   insert INTO 
+	   sys_user(id,username,password,create_time,update_time) 
+	   
+	   VALUES(#{id},#{username},#{password},#{createTime},#{updateTime})
+	</insert>
+  <!--  
+    <select id="findByUserName" resultType="User" parameterType="java.lang.String">
+    	SELECT
+			<include refid="columns"/>
+		FROM sys_user a
+		WHERE a.username = #{username}
+    </select>
+    -->
+</mapper>
